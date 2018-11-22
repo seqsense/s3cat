@@ -5,13 +5,14 @@ go:
 env:
   global:
     - GO111MODULE=on
+    - PACKAGE=s3cat
 
 branches:
   only:
     - master
 
 install:
-  - go build -a -tags netgo -installsuffix netgo -ldflags '-extldflags "-static"'
+  - ./crosscompile.sh
 
 script:
   - go vet ./...
@@ -21,7 +22,20 @@ deploy:
   provider: releases
   api_key:
     secure: tQVWpc4xLQIv6fNiD6EcOMlleWf/Vf3oeBuLglRonE5Owo3lZxFu8SLWLRvy1t/H5vq5unqWbhJSGTHB83N8mzUrjycylqWO+xuopWcs0W++cp3VukWQVPEi8BEOofWUu6RS/ecntaKkzW4I1AUTNgyNNDPQXBx3QCZJ0FZl8BN9FD3N9S/IBIM6n1Ss4k+mriLqMT49PuPd6UGYK4dsgaii0wYN8DtTkyJ7EaUfjPIhYYvaAk2/8w6pzBSFfV7KHgGDBMhJ/Efvl8LIc5Z1SaIMeD3AHuCJ4Ibp8wQ3ljambaGUBLztxIshRRzmk6lZwRtgyy/onz4blezIEmoh4U2pRoxCc56tjOzFALnKdzYR6OgvaXc4Yn0wkUdZw2Aad/RPffDRxahVhbEvZ3ID4iBiUw1t2TtuDKB0Fu6tfI7xi+HiTuuYIfL7oxql2DjXvUX0RgigTMF9qYQdKheKTuzQEYRzse8a/KtEFpheZfszMNfZC0TJawSMDCC+zGdMkjMg5bbiPRQbP+AAv57LomAmTvGPWJY/R4Ivx6ZpKT2PkMSCPsQ1XZbs1v81+eV+9/WdwngyxcBSFEyN6KojZzLS4RrY5OExULSZbyNHS6fk2w+cQ0MkOuRPfGWa7JqtOe2TPWuDkx3vFUWLTSC7zhc0k1twoJ8qyTnDMwwYTss=
-  file: s3cat
+  file:
+    - ${PACKAGE}-darwin-386.tgz
+    - ${PACKAGE}-darwin-386.zip
+    - ${PACKAGE}-darwin-amd64.tgz
+    - ${PACKAGE}-darwin-amd64.zip
+    - ${PACKAGE}-linux-386.tgz
+    - ${PACKAGE}-linux-386.zip
+    - ${PACKAGE}-linux-amd64.tgz
+    - ${PACKAGE}-linux-amd64.zip
+    - ${PACKAGE}-linux-arm64.tgz
+    - ${PACKAGE}-linux-arm64.zip
+    - ${PACKAGE}-linux-arm.tgz
+    - ${PACKAGE}-linux-arm.zip
+
   skip_cleanup: true
   on:
     tags: true
