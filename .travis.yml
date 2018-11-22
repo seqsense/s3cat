@@ -10,6 +10,7 @@ env:
 branches:
   only:
     - master
+    - crosscompile
 
 install:
   - ./crosscompile.sh
